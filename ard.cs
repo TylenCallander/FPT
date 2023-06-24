@@ -100,7 +100,6 @@
 #define NOTE_D8  4699
 #define NOTE_DS8 4978
 
-
 // Setup button states
 int player1State = 0;
 int player2State = 0;
@@ -181,22 +180,20 @@ void playMusic() {
 }
 
 void readButtonStates() {
-  player1State = digitalRead(player1Button);
-  player2State = digitalRead(player2Button);
-  player3State = digitalRead(player3Button);
-  hostState =
-
- digitalRead(hostButton);
+  player1State = digitalRead(p1Button);
+  player2State = digitalRead(p2Button);
+  player3State = digitalRead(p3Button);
+  hostState = digitalRead(hostButton);
 }
 
 void resetGame() {
   // Play buzzer tone after the time limit
   tone(speaker, 2000, 3000);
   // Turn off all player LEDs and turn the host LED back on
-  digitalWrite(player1LED, LOW);
-  digitalWrite(player2LED, LOW);
-  digitalWrite(player3LED, LOW);
-  digitalWrite(hostLED, HIGH);
+  digitalWrite(p1Led, LOW);
+  digitalWrite(p2Led, LOW);
+  digitalWrite(p3Led, LOW);
+  digitalWrite(hostLed, HIGH);
   // Reset counters and indices
   counter1 = 0;
   counter2 = 0;
@@ -210,8 +207,8 @@ void player1Logic() {
   if (player1State == HIGH && counter1 == 0) {
     // Start the game and turn on player 1 LED, turn off host LED
     gameStarted = 1;
-    digitalWrite(player1LED, HIGH);
-    digitalWrite(hostLED, LOW);
+    digitalWrite(p1Led, HIGH);
+    digitalWrite(hostLed, LOW);
     buttonPressStart = millis();
     counter2 = 1;
     counter1 = 1;
@@ -223,8 +220,8 @@ void player2Logic() {
   if (player2State == HIGH && counter1 == 0) {
     // Start the game and turn on player 2 LED, turn off host LED
     gameStarted = 1;
-    digitalWrite(player2LED, HIGH);
-    digitalWrite(hostLED, LOW);
+    digitalWrite(p2Led, HIGH);
+    digitalWrite(hostLed, LOW);
     buttonPressStart = millis();
     counter2 = 1;
     counter1 = 1;
@@ -236,8 +233,8 @@ void player3Logic() {
   if (player3State == HIGH && counter1 == 0) {
     // Start the game and turn on player 3 LED, turn off host LED
     gameStarted = 1;
-    digitalWrite(player3LED, HIGH);
-    digitalWrite(hostLED, LOW);
+    digitalWrite(p3Led, HIGH);
+    digitalWrite(hostLed, LOW);
     buttonPressStart = millis();
     counter2 = 1;
     counter1 = 1;
@@ -247,7 +244,7 @@ void player3Logic() {
 void hostLogic() {
   if (hostState == HIGH && counter1 == 1) {
     Serial.println("Before reset");
-    digitalWrite(hostLED, HIGH);
+    digitalWrite(hostLed, HIGH);
     resetGame();
   }
 }
